@@ -1,1 +1,6 @@
 Hello world
+
+To run rule based agent:
+py .\Rulebased.py
+
+.\battlesnake\battlesnake.exe play -W 11 -H 11 --name 'Python Starter Project' --url http://localhost:8000 -g solo --browser
