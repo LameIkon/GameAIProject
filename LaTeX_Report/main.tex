@@ -1,0 +1,785 @@
+\documentclass[a4paper,twoside,twocolumn]{IEEEtran}
+% Use one column for design and twocolumn for research reports
+
+
+% --------------------------------------------------
+% Packages
+% --------------------------------------------------
+
+\usepackage{graphicx}                       % Images
+\usepackage[caption=false,font=footnotesize]{subfig} % Subfigures
+\usepackage{amsmath,amsfonts,amssymb}       % Equations
+\usepackage{algorithm}                      % Algorithms
+\usepackage{algorithmic}
+\usepackage{cite}                           % References
+\usepackage{enumitem}                       % Lists
+\usepackage{listings}                       % Code blocks
+\usepackage{xcolor}                         % Colours for code highlighting
+\usepackage{multirow}                       % Cells spanning multiple rows
+\usepackage{array}                          % Extra column types for tables
+\usepackage{booktabs}                       % Professional table rules
+\usepackage{url}                            % Typesetting web addresses
+
+
+% You can define unsual hypenation here.
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
+
+
+% --------------------------------------------------
+% Code listing style (used by all lstlisting blocks)
+% Change `language=` to Java, Python, etc. as needed.
+% --------------------------------------------------
+
+\definecolor{codegreen}{rgb}{0.0,0.5,0.0}
+\definecolor{codeblue}{rgb}{0.0,0.0,0.6}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+
+\lstset{
+    language=C++,
+    linewidth=0.95\columnwidth,
+    xleftmargin=0.05\columnwidth,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\bfseries\color{codeblue},
+    commentstyle=\itshape\color{codegreen},
+    stringstyle=\color{codegreen},
+    numbers=left,
+    numberstyle=\tiny\color{codegray},
+    numbersep=6pt,
+    frame=single,
+    breaklines=true,
+    showstringspaces=false,
+    captionpos=b,
+    tabsize=2,
+    columns=fixed
+}
+
+
+% --------------------------------------------------
+% Document
+% --------------------------------------------------
+
+\begin{document}
+
+
+% --------------------------------------------------
+% Title
+% --------------------------------------------------
+
+\title{A Sample Project Template\\ for Spiltek Students}
+
+\author{Elev En, Elev To, Elev Tre, Elev Fire, Elev Fem% <-this % stops a space
+  % Here you can specify the roles and contributions of the team.
+  \thanks{\textbf{Lead Designer:} Elev En \dotfill 20\%}%
+  \thanks{\textbf{Systems Designer:} Elev To \dotfill 20\%}%
+  \thanks{\textbf{Lead Programmer:} Elev Tre \dotfill 20\%}%
+  \thanks{\textbf{QA Lead:} Elev Fire \dotfill 20\%}%
+  \thanks{\textbf{Art Director:} Elev Fem \dotfill 20\%}
+}
+
+% The paper headers
+\markboth{Syddansk Universitet (SDU) - Spiludvikling og Læringsteknologi}%
+% Here mark the surname of the authors and the tile again.
+{En \MakeLowercase{\textit{et al.}}: A Sample Project Template for Spiltek Students}
+
+\maketitle
+
+
+% --------------------------------------------------
+% Abstract
+% --------------------------------------------------
+
+\begin{abstract}
+This document is a template for Spiltek project reports. Your abstract should
+briefly state the game or system you built, the approach you took, and your main
+result --- for example, what a playtest revealed about your core mechanic.
+\end{abstract}
+
+
+\begin{IEEEkeywords}
+game design, playtesting, prototyping, level design
+\end{IEEEkeywords}
+
+
+% --------------------------------------------------
+% Introduction
+% --------------------------------------------------
+
+\section{Introduction}
+
+LaTeX is a typesetting system in which you write plain text marked up with simple
+commands, and it produces a polished, consistently formatted document. Its main
+advantage is that you concentrate on \emph{what} you are writing while LaTeX
+handles \emph{how} it looks: it manages spacing, fonts, section numbering, and
+the placement of figures (see Fig.~\ref{fig:single}) and tables for you, 
+so the layout takes care of itself and stays uniform throughout. 
+The rest of this document introduces the pieces you will need for a Spiltek report.
+
+This is a normal paragraph. In LaTeX you do not press Enter to start a new
+paragraph. Instead, a paragraph continues until you leave a completely blank
+line; a single line break in the source is treated as an ordinary space, so you
+can wrap your source text however you like without affecting the output. One or
+more blank lines end the current paragraph and begin the next one (extra blank
+lines have no additional effect). Avoid using \verb|\\| to separate paragraphs:
+that command forces a line break \emph{within} a paragraph and does not start a
+new one, so it usually produces the wrong spacing.
+
+This is the second paragraph. Notice the blank line above it in the source and
+the first-line indentation LaTeX adds automatically to mark the paragraph break.
+
+LaTeX allows basic formatting:
+
+\textbf{Bold text}
+
+\textit{Italic text}
+
+\emph{Emphasised text}
+
+Some characters have a special meaning in LaTeX and cannot simply be typed as-is.
+The ten reserved characters are
+\verb|# $ % & _ { } ~ ^ \|. To print seven of them literally, put a backslash
+in front: \verb|\# \$ \% \& \_ \{ \}|. The remaining three are trickier: use
+\verb|\textasciitilde| for \textasciitilde, \verb|\textasciicircum| for
+\textasciicircum, and \verb|\textbackslash| for \textbackslash{} (writing
+\verb|\\| would instead force a line break). Anything after an unescaped \%
+becomes a comment, which is handy for leaving notes in your source but means a
+value such as a 90\% win rate must be written \verb|90\%|. The tilde has a second
+use outside \verb|\textasciitilde|: on its own, \verb|~| is a non-breaking space,
+explained in Section~\ref{sec:sections}.
+
+When you need to show code or literal symbols without any LaTeX interpretation,
+use \verb|\verb| for a short inline snippet. It works by picking a delimiter
+character that does not appear in your snippet and placing a copy on each side;
+the vertical bar is used throughout this template, but any unused symbol works
+(for example \verb+\verb+ with plus signs was used to typeset the bars you see
+here). For whole blocks, such as a snippet of game code see Section~\ref{sec:code}.
+
+A footnote adds a small note at the bottom of the page.\footnote{Like this one
+--- useful for an aside or a source that is not a formal reference.} Write it
+with \verb|\footnote{...}| placed \emph{immediately} after the word it attaches
+to, with no space before it, so the raised marker sits tight against that word.
+LaTeX numbers footnotes automatically.
+
+Web addresses should be set with \verb|\url| (from the \texttt{url} package),
+which uses a monospace font and lets a long link break sensibly across lines:
+for example, the SDU site is \url{https://www.sdu.dk}. Do not type a bare URL as
+ordinary text, because its \verb|~|, \verb|%|, or \verb|#| characters are special
+(see above) and would need escaping. In a report, a footnote and a URL often go
+together --- cite a web resource in a footnote using \verb|\footnote{\url{...}}|.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{example-image}
+    \caption{A screenshot of the prototype's first playable level.}
+    \label{fig:single}
+\end{figure}
+
+% --------------------------------------------------
+% Citations and References
+% --------------------------------------------------
+
+\section{Citations and References}
+\label{sec:cite}
+
+References are managed using a separate BibTeX file (e.g.,
+\texttt{references.bib}). Each source is one entry in that file: an entry type
+(such as \verb|@book|, \verb|@article|, or \verb|@inproceedings|), a citation
+\emph{key} you choose, and a set of fields describing the source. For example,
+the entry below defines a book with the key \texttt{tekinbas2003rules}:
+
+\begin{verbatim}
+@book{tekinbas2003rules,
+  title={Rules of play: Game design
+         fundamentals},
+  author={Tekinbas, Katie Salen and
+          Zimmerman, Eric},
+  year={2003},
+  publisher={MIT press}
+}
+\end{verbatim}
+
+To cite that source in your text, use the \verb|\cite{}| command with its key:
+writing \verb|\cite{tekinbas2003rules}| produces \cite{tekinbas2003rules}. You
+never type the number yourself --- BibTeX assigns and orders the numbers, formats
+each entry in the chosen style, and lists only the sources you actually cite.
+
+A single reference can be cited as follows:
+\cite{rigby2011immersion}
+
+Multiple references can be cited together:
+\cite{rigby2011immersion,salen2005game}
+
+When several sources support the same statement, they can be grouped into one citation.
+For example, research on player motivation and game design has been discussed extensively
+in the literature \cite{rigby2011immersion,salen2005game,hunicke2004mda}.
+
+The bibliography is generated automatically at the end of the document.
+\verb|\bibliographystyle| selects the formatting (here, the IEEE style) and
+\verb|\bibliography| names your \texttt{.bib} file without the extension:
+
+\begin{verbatim}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\end{verbatim}
+
+Note that BibTeX requires an extra build step: compile the document, run BibTeX,
+then compile twice more so the citation numbers settle. Most editors (Overleaf,
+TeXstudio, and others) do this for you automatically.
+
+\subsection{Quotation Marks and Quotes}
+
+LaTeX distinguishes opening from closing quotation marks, and the straight
+typewriter character \verb|"| produces neither correctly. To get properly curved
+marks, type two backticks to open and two apostrophes to close:
+\verb|``...''| gives ``like this'', whereas \verb|"..."| gives the wrong shape.
+The same applies to single quotes with \verb|`...'|.
+
+For a short quotation, keep it inline within your own sentence and cite the
+source. For a longer passage, set it apart using the \verb|quote| environment,
+which indents the block so the reader can see at a glance that the words are not
+yours. Always attribute a block quote with a \verb|\cite|:
+
+\begin{quote}
+Game design and authorship happen at many levels, and the fields of games
+research and development involve people from diverse creative and scholarly
+backgrounds. While it's often necessary to focus on one area, everyone,
+regardless of discipline, will at some point need to consider issues outside
+that area: base mechanisms of game systems, the overarching design goals, or the
+desired experiential results of gameplay \cite{hunicke2004mda}.
+\end{quote}
+
+Use block quotes sparingly --- a report should mostly be your own analysis, with
+quotations reserved for wording that matters.
+
+% --------------------------------------------------
+% Sections and Subsections
+% --------------------------------------------------
+
+\section{Sections and Subsections}
+\label{sec:sections}
+
+Documents are organised into a hierarchy of headings. \verb|\section| creates a
+top-level heading (numbered automatically), \verb|\subsection| a level below it,
+and \verb|\subsubsection| a level below that. You do not number them yourself;
+LaTeX handles the numbering and will renumber everything if you reorder or insert
+sections. You might use this structure to break your game down from a high-level
+concept into individual systems.
+
+To refer to a heading elsewhere, give it a \verb|\label| immediately after the
+heading, then use \verb|\ref| to print its number. For example, this section was
+labelled with \verb|\label{sec:sections}| and can be cited as
+Section~\ref{sec:sections}; the citation guidance is in
+Section~\ref{sec:cite}. Because LaTeX fills in the number, your cross-references
+stay correct even if you reorder the document. A useful convention is to prefix
+labels by type --- \texttt{sec:}, \texttt{fig:}, \texttt{tab:}, \texttt{lst:},
+\texttt{eq:} --- so their purpose is obvious.
+
+Notice the \verb|~| in \verb|Section~\ref{sec:sections}|. That tilde is a
+\emph{non-breaking space}: it inserts an ordinary space but forbids a line break
+at that point, so the word ``Section'' can never be separated from its number
+across two lines. Always use \verb|~| between a label word and its reference
+(\verb|Figure~\ref{...}|, \verb|Table~\ref{...}|), before a \verb|\cite|, and in
+similar tight pairs such as ``Section~III'' or ``Elev~En''.
+
+
+\subsection{Core Mechanics}
+
+A subsection covers a more specific topic within its parent section, such as the
+handful of core mechanics that define how your game plays.
+
+
+\subsubsection{Enemy Behaviour}
+
+A smaller heading can break a subsection down further --- for example, the
+behaviour of a single enemy type within the game's combat system.
+
+
+% --------------------------------------------------
+% Lists
+% --------------------------------------------------
+
+\section{Lists}
+\label{sec:lists}
+
+Lists present a series of related items. LaTeX provides three built-in kinds,
+each an environment whose entries are marked with \verb|\item|. Choose the kind
+by what the order of the items means: use a bullet list when order does not
+matter, a numbered list when it does (steps, rankings), and a description list
+when each item is a term being defined.
+
+
+\subsection{Bullet List}
+
+A bullet list uses the \texttt{itemize} environment, for items with no
+particular order, such as a game's headline features:
+
+\begin{itemize}
+    \item Local co-op multiplayer
+    \item Procedurally generated levels
+    \item Unlockable playable characters
+\end{itemize}
+
+
+\subsection{Numbered List}
+
+A numbered list uses the \texttt{enumerate} environment, for ordered items such
+as the steps of a design iteration. The numbers are generated automatically:
+
+\begin{enumerate}
+    \item Prototype the core mechanic
+    \item Playtest with target players
+    \item Iterate on the feedback
+\end{enumerate}
+
+
+\subsection{Description List}
+
+A description list uses the \texttt{description} environment. The bracketed text
+after each \verb|\item| becomes the bold term being defined, which is useful for
+a glossary of game terms:
+
+\begin{description}
+    \item[Sprite] A 2D image drawn as part of the game world.
+    \item[Hitbox] The region used to detect collisions.
+    \item[Tick] A single fixed update of the game simulation.
+\end{description}
+
+Lists can also be nested inside one another, and the \texttt{enumitem} package
+(already loaded) lets you customise the labels and spacing if needed.
+
+
+
+% --------------------------------------------------
+% Figures
+% --------------------------------------------------
+
+\section{Figures}
+\label{sec:figures}
+
+Images are placed with \verb|\includegraphics| inside a \texttt{figure}
+environment, which turns the image into a numbered, captioned \emph{float} that
+LaTeX positions for you. The optional argument in brackets is a \emph{placement
+hint}: \verb|t| (top of a page), \verb|b| (bottom), \verb|h| (here,
+approximately), and \verb|p| (a page of floats). You may combine letters --- the
+hints are tried in the order LaTeX prefers, not the order you write them.
+
+For this template, prefer \verb|[t]|: top-placed figures give the cleanest,
+most consistent layout in a two-column document, and it is the IEEE convention.
+If a figure will not sit where you want, or LaTeX pushes it far from its text,
+relax the hint rather than fight it: \verb|[ht]| lets LaTeX try ``here'' before
+falling back to the top, \verb|[h]| asks for roughly the current position, and
+adding \verb|!| (as in \verb|[ht!]| or \verb|[!t]|) tells LaTeX to ignore its
+usual spacing limits and honour your hint more aggressively. Reach for these
+only when the default causes a real problem --- overusing \verb|h| tends to leave
+awkward gaps. Set the image size relative to the text with
+\verb|width=0.8\linewidth| rather than in fixed centimetres, so it scales with
+the layout. Always give each figure a \verb|\caption| and a \verb|\label| so it
+can be referenced; place the \verb|\label| after the \verb|\caption|.
+
+Figures can then be referenced by number, e.g.\ Figure~\ref{fig:single} shows the
+level. Because floats move, always refer to them by \verb|\ref| (with a
+non-breaking \verb|~| before it) rather than by position (never ``the screenshot
+below'').
+
+A figure that needs the full width of the page, spanning both columns, uses the
+starred form \verb|figure*| with \verb|width=\textwidth| --- useful for a wide
+world map or a full UI mock-up. Note that two-column floats can only appear at
+the top of a page, so they often move further from their source position than
+single-column figures do.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.8\textwidth]{example-image-golden}
+  \caption{The game's full world map, shown across both columns.}
+  \label{fig:wide}
+\end{figure*}
+
+Figure~\ref{fig:wide} spans both columns in this way. 
+This obviously has little to no effect in the one-column layout of the template.
+
+
+% --------------------------------------------------
+% Subfigures
+% --------------------------------------------------
+
+\section{Subfigures}
+\label{sec:subfigures}
+
+Several related images can be grouped inside a single figure using
+\verb|\subfloat| (from the \texttt{subfig} package). Each subfigure gets its own
+caption and its own \verb|\label|, so you can reference either the whole figure
+or an individual part. The \verb|\hfill| between them spreads them evenly across
+the column. This is ideal for showing how a level evolved between iterations.
+
+\begin{figure}[t]
+    \centering
+
+    \subfloat[Greybox prototype]{
+        \includegraphics[width=0.45\linewidth]{example-image-a}
+        \label{fig:greybox}
+    }
+    \hfill
+    \subfloat[Final art pass]{
+        \includegraphics[width=0.45\linewidth]{example-image-b}
+        \label{fig:finalart}
+    }
+
+    \caption{Two iterations of the same level: early greybox and final art.}
+    \label{fig:iterations}
+\end{figure}
+
+
+Figure~\ref{fig:iterations} compares the two versions --- the greybox stage is
+Figure~\ref{fig:greybox} and the final art is Figure~\ref{fig:finalart}. Note
+that each subfigure label resolves to a letter (a), (b), while the parent figure
+resolves to its number.
+
+
+% --------------------------------------------------
+% Tables
+% --------------------------------------------------
+
+\section{Tables}
+\label{sec:tables}
+
+Tables are useful for presenting structured information. The simplest form is a
+few columns and rows inside a \verb|tabular| environment, wrapped in a
+\verb|table| float so it can carry a caption and be referenced. The argument to
+\verb|tabular| declares one column each: \verb|l|, \verb|c|, and \verb|r| give
+left-, centre-, and right-aligned columns; rows are separated by \verb|\\|. In
+professional IEEE style, tables use \emph{no vertical rules} and only a few
+horizontal ones. The \texttt{booktabs} package provides these: \verb|\toprule|
+at the top, \verb|\midrule| under the header, and \verb|\bottomrule| at the
+bottom --- and its manual advises against ever adding vertical lines. Note also
+that a table's \verb|\caption| goes \emph{above} it (unlike a figure's, which
+goes below). Table~\ref{tab:controls} shows a basic example.
+
+\begin{table}[!t]
+\caption{Default Keyboard Controls}
+\label{tab:controls}
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Action} & \textbf{Key}\\
+\midrule
+Move       & W A S D\\
+Jump       & Space\\
+Interact   & E\\
+Pause      & Esc\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For richer data, a table can group columns under a shared heading with
+\verb|\multicolumn| and let a label span several rows with \verb|\multirow|. A
+\verb|\cmidrule| draws a partial rule under just the grouped columns.
+Table~\ref{tab:playtest} summarises playtest results for two enemy AI variants
+across two difficulty settings.
+
+\begin{table}[!t]
+\caption{Playtest Results by AI Variant and Difficulty}
+\label{tab:playtest}
+\centering
+\begin{tabular}{llccr}
+\toprule
+\multirow{2}{*}{\textbf{AI Variant}} & \multirow{2}{*}{\textbf{Difficulty}}
+  & \multicolumn{2}{c}{\textbf{Player Outcome}} & \multirow{2}{*}{\textbf{Rating}\textsuperscript{a}}\\
+\cmidrule(lr){3-4}
+ & & \textbf{Win \%} & \textbf{Avg.\ Time} & \\
+\midrule
+\multirow{2}{*}{Patrol}  & Normal & 72 & 4:15 & 3.8\\
+                         & Hard   & 48 & 6:02 & 4.1\\
+\midrule
+\multirow{2}{*}{Flanker} & Normal & 55 & 5:30 & 4.4\\
+                         & Hard   & 31 & 8:47 & 4.6\\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize \textsuperscript{a}Mean fun rating on a 1--5 scale ($n=20$).}
+\end{table}
+
+Table~\ref{tab:playtest} presents the results. Note how
+\verb|\multicolumn{2}{c}{...}| merges two header cells into one, and
+\verb|\cmidrule(lr){3-4}| rules only the two columns under that grouped heading
+(the \verb|(lr)| trims the rule slightly so it does not touch neighbouring
+columns). A \verb|\midrule| separates the two AI variants. For a table too wide
+for one column, wrap it in a \verb|table*| float so it spans both columns,
+exactly as with a full-width figure.
+
+
+% --------------------------------------------------
+% Code Listings
+% --------------------------------------------------
+
+\section{Code Listings}\label{sec:code}
+
+Source code is presented with the \texttt{lstlisting} environment, which
+preserves indentation and adds syntax highlighting. Placing it inside a
+\texttt{figure} gives it a caption, a label, and the same spacing as any other
+figure. The listing below shows a \emph{fixed-timestep game loop}: physics is
+advanced in constant-size steps so that simulation behaviour is independent of
+frame rate, while rendering is interpolated to stay smooth on faster displays.
+
+\begin{figure}[t]
+\centering
+\begin{lstlisting}
+// Physics advances at a constant rate; rendering runs
+// as fast as the platform allows.
+const double dt = 1.0 / 60.0;   // 60 physics updates / second
+double accumulator = 0.0;
+double previous = getCurrentTime();
+
+while (running) {
+    double now = getCurrentTime();
+    accumulator += now - previous;
+    previous = now;
+
+    processInput();
+
+    // Consume fixed-size steps until we have caught up.
+    while (accumulator >= dt) {
+        updatePhysics(dt);
+        accumulator -= dt;
+    }
+
+    // Blend factor for interpolating between physics states.
+    double alpha = accumulator / dt;
+    render(alpha);
+}
+\end{lstlisting}
+\caption{Fixed-timestep game loop.}
+\label{lst:gameloop}
+\end{figure}
+
+Listing~\ref{lst:gameloop} decouples the simulation rate from the render rate,
+a common requirement for deterministic gameplay and networked physics. Change
+the \verb|language=| key in the \verb|\lstset| block near the top of the file to
+highlight a different language, such as C\# for Unity.
+
+
+% --------------------------------------------------
+% Algorithms
+% --------------------------------------------------
+
+\section{Algorithms}
+\label{sec:algorithms}
+
+Higher-level logic is often clearer as pseudocode than as source code. The
+\texttt{algorithm} and \texttt{algorithmic} environments are used for this: the
+\texttt{algorithm} wrapper provides the caption and number (like a float), while
+\texttt{algorithmic} formats the steps. Commands such as \verb|\STATE|,
+\verb|\IF|/\verb|\ENDIF|, \verb|\WHILE|/\verb|\ENDWHILE|, and \verb|\FORALL| set
+the keywords in the conventional style, and the optional \verb|[1]| numbers the
+lines. Algorithm~\ref{alg:astar} describes \emph{A* pathfinding} over a
+navigation grid, a standard technique for moving enemies around obstacles.
+
+\begin{algorithm}[t]
+\caption{A* Pathfinding over a Navigation Grid}\label{alg:astar}
+\begin{algorithmic}[1]
+\REQUIRE start node $s$, goal node $t$, admissible heuristic $h(n)$
+\ENSURE a shortest path from $s$ to $t$, or none if $t$ is unreachable
+\STATE $open \gets \{s\}$ \COMMENT{priority queue ordered by $fScore$}
+\STATE $gScore[s] \gets 0$
+\STATE $fScore[s] \gets h(s)$
+\WHILE{$open \neq \emptyset$}
+    \STATE $current \gets \arg\min_{n \in open} fScore[n]$
+    \IF{$current = t$}
+        \RETURN \textsc{Reconstruct}($cameFrom, current$)
+    \ENDIF
+    \STATE remove $current$ from $open$
+    \FORALL{neighbours $n$ of $current$}
+        \STATE $tentative \gets gScore[current] + \textsc{Cost}(current, n)$
+        \IF{$tentative < gScore[n]$}
+            \STATE $cameFrom[n] \gets current$
+            \STATE $gScore[n] \gets tentative$
+            \STATE $fScore[n] \gets tentative + h(n)$
+            \IF{$n \notin open$}
+                \STATE add $n$ to $open$
+            \ENDIF
+        \ENDIF
+    \ENDFOR
+\ENDWHILE
+\RETURN none
+\end{algorithmic}
+\end{algorithm}
+
+The heuristic $h(n)$ estimates the remaining cost to the goal (for a tile grid,
+Manhattan or Euclidean distance is typical). As long as $h$ never overestimates,
+A* is guaranteed to return a shortest path for the enemy to follow.
+
+
+% --------------------------------------------------
+% Mathematics
+% --------------------------------------------------
+
+\section{Mathematics}
+\label{sec:math}
+
+Mathematics is written in \emph{math mode}. For a short formula inside a
+sentence, use inline math delimited by dollar signs: the damage after a
+$25\%$ armour reduction is $d' = 0.75\,d$. For a formula you want set apart on
+its own line and automatically numbered, use the \texttt{equation} environment:
+
+\begin{equation}
+d' = d \left(1 - \frac{a}{a + k}\right)
+\label{eq:armour}
+\end{equation}
+
+Equation~\ref{eq:armour} is a common armour-damage formula, where $a$ is armour
+and $k$ a tuning constant, and \verb|\label| lets you refer back to it by number.
+If you want a displayed formula \emph{without} a number, use \verb|\[ ... \]| (or
+the \texttt{equation*} environment) instead.
+
+Superscripts are written with \verb|^| and subscripts with \verb|_|. Each applies
+to the single character that follows, so wrap anything longer in braces:
+\verb|2^n| gives $2^n$ but \verb|2^{n-1}| is needed for $2^{n-1}$, and
+\verb|v_{max}| gives $v_{max}$. The two can be combined on the same symbol, as in
+\verb|x_i^2| for $x_i^2$. This is how you write things like a player's health
+$h_i$ on frame $i$, or a score that grows as $2^{n}$ with the combo count $n$.
+
+Beyond these, a few constructs come up constantly. Fractions use \verb|\frac|,
+Greek letters have named commands such as \verb|\alpha| and \verb|\theta|, and
+operators like $\sum$, $\sqrt{\;}$, and $\leq$ have their own commands too. For
+instance, interpolating a character between two waypoints and averaging a score
+over $n$ playtests can be written as Equation~\ref{eq:lerp}:
+
+\begin{equation}
+p(t) = (1-t)\,p_0 + t\,p_1, \qquad
+\bar{s} = \frac{1}{n}\sum_{i=1}^{n} s_i
+\label{eq:lerp}
+\end{equation}
+
+Note that spaces in the source are ignored in math mode, so LaTeX handles the
+spacing for you; use \verb|\,| or \verb|\quad| only when you want to fine-tune
+it. Remember also that symbols such as \verb|^|, \verb|_|, and Greek letters work
+\emph{only} inside math mode --- writing them in ordinary text will produce an
+error or the wrong output.
+
+
+% --------------------------------------------------
+% Conclusion
+% --------------------------------------------------
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Summarise the main outcomes of your game project: what you built, how it played,
+and what your playtests showed. Keep it short --- the detail belongs in the
+sections above.
+
+
+% --------------------------------------------------
+% Acknowledgments
+% --------------------------------------------------
+
+\section*{Acknowledgments}
+The main use of the Acknowledgments section is to declare the usage of generative AI
+in the project (e.g. assets, code) and the writing of the report.
+
+
+% --------------------------------------------------
+% References
+% --------------------------------------------------
+
+% \nocite{*}  % <= Uncomment this to show the whole biblography
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+
+% --------------------------------------------------
+% Appendix
+% --------------------------------------------------
+
+\clearpage
+
+\appendices
+
+\section{Compiling This Template}
+\label{app:setup}
+This appendix explains how to build the template on Windows using \textbf{VS
+Code} and \textbf{MiKTeX}. Follow the steps in order.
+
+\begin{enumerate}
+\item Download MiKTeX from \url{https://miktex.org/download} and run the
+      installer. You can accept the defaults.
+\item When asked to install missing packages on-the-fly, choose \textbf{Yes}.
+      This lets MiKTeX fetch packages such as \texttt{booktabs} automatically.
+\item Open the MiKTeX Console once and apply any updates it offers.
+\item Download VS Code from \url{https://code.visualstudio.com} and install it.
+\item In VS Code, open the Extensions view (\texttt{Ctrl+Shift+X}), search for
+      \textbf{LaTeX Workshop}, and install it.
+\item Open the Command Palette (\texttt{Ctrl+Shift+P}) and run
+      \emph{Preferences: Open User Settings (JSON)}.
+\item Type \emph{latex recipe} in the search box. 
+      Set \emph{Latex-workshop Latex: Recipe.default} to
+      \texttt{pdflatex -> bibtex -> pdflatex * 2}.
+\item Unzip the template with \texttt{main.tex} and \texttt{references.bib} in one folder, 
+      and open that folder with \emph{File $\rightarrow$ Open Folder}.
+\item Open \texttt{main.tex} and save it (\texttt{Ctrl+S}). The PDF builds
+      automatically; you can also press \texttt{Ctrl+Alt+B}.
+\item The first build is slow. If MiKTeX asks to install packages, click
+      \textbf{Install}. This happens only once.
+\item Press \texttt{Ctrl+Alt+V} to view the PDF.
+\end{enumerate}
+
+If you get errors regarding pdflatex, Open the Command Palette 
+(\texttt{Ctrl+Shift+P}) and run \emph{Preferences: Open User Settings (JSON)}.
+Type \emph{latex recipe} in the search box. Click on \texttt{Edit in settings.json})
+and paste the following block; overriding the previous setup.
+
+\begin{footnotesize}
+\begin{verbatim}
+{
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
+    "latex-workshop.latex.tools": [
+    {
+        "name": "pdflatex",
+        "command": "pdflatex",
+        "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+        ]
+    },
+    {
+        "name": "bibtex",
+        "command": "bibtex",
+        "args": ["%DOCFILE%"]
+    }
+    ],
+    "latex-workshop.latex.recipes": [
+        
+    {
+        "name": "pdflatex -> bibtex -> pdflatex x2",
+        "tools": ["pdflatex", "bibtex", "pdflatex", "pdflatex"]
+    }
+    ],
+    "latex-workshop.latex.recipe.default": "first"
+}
+\end{verbatim}
+\end{footnotesize}
+
+If citations show as ``[?]'', build once more. If a build error names a missing
+package, let MiKTeX install it and build again. If nothing happens on save,
+check that you opened the folder (not just the file) and that LaTeX Workshop is
+enabled.
+
+\section{Full Playtest Questionnaire}
+\label{app:questionnaire}
+Appendices hold supporting material that would interrupt the main text --- raw
+data, long tables, or full questionnaires. For a single appendix use
+\verb|\appendix|; for several, use \verb|\appendices| and begin each one with
+\verb|\section|, which LaTeX labels ``Appendix A'', ``Appendix B'', and so on.
+Appendices can be labelled and referenced just like sections, so this one is
+Appendix~\ref{app:questionnaire}. It would contain the complete list of questions
+given to playtesters after each session, including the fun-rating scale
+referenced in Table~\ref{tab:playtest}.
+
+\section{Extended Controls Reference}
+\label{app:controls}
+This appendix (Appendix~\ref{app:controls}) would list the full keyboard and
+gamepad control scheme, including the secondary and debug bindings omitted from
+the summary in Table~\ref{tab:controls}.
+
+\end{document}
