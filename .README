@@ -1,5 +1,8 @@
 Hello world
 
+To install requiremnets:
+pip install -r .\requirements.txt
+
 To run rule based agent:
 py .\Rulebased.py
 
