@@ -1,0 +1,1 @@
+.\Battlesnake\battlesnake.exe play -W 11 -H 11 --name 'python' --url http://0.0.0.0:8000 -g solo --browser
