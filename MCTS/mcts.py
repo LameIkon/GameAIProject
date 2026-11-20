@@ -1,10 +1,13 @@
 """Open-loop MCTS: plan in a native HISSS game or from a Battlesnake request."""
 import argparse
+import math
 from contextlib import closing
 from dataclasses import dataclass, field
 from math import log, sqrt
 from pathlib import Path
 import random
+from sys import prefix
+
 from hisss_tools import MOVES, advance, from_battlesnake, replay, rollout_moves, seed_native, serve
 
 
@@ -42,6 +45,21 @@ def selection(root, game, horizon, C=1.4):
        Add the reward to the prefix reward and continue from the child at step 2.
        Do not change visit counts here. We will do this in the backpropagation phase.
     """
+
+    node = root
+    prefix_reward = 0
+    depth = 0
+    while not game.is_terminal() and depth < horizon:
+
+        if len(node.children) < 4:
+            break
+
+        for child in node.children:
+            score = child.total/child.visits + C * math.sqrt(math.log(node.visits)/child.visits)
+
+
+
+
     raise NotImplementedError("Implement selection.")
 
 
