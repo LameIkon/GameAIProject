@@ -8,6 +8,8 @@ from pathlib import Path
 import random
 from sys import prefix
 
+from sympy.codegen.ast import none
+
 from hisss_tools import MOVES, advance, from_battlesnake, replay, rollout_moves, seed_native, serve
 
 
@@ -54,13 +56,26 @@ def selection(root, game, horizon, C=1.4):
         if len(node.children) < 4:
             break
 
-        for child in node.children:
+        best_score = -1111.1
+        best_child = None
+        for child in node.children.values():
             score = child.total/child.visits + C * math.sqrt(math.log(node.visits)/child.visits)
+            if score > best_score:
+                best_score = score
+                best_child = child
 
+        for action, child in node.children.items():
+            if child == best_child:
+                reward, done, apples = advance(game,action)
+                break
 
+        prefix_reward += reward
+        node = best_child
+        depth += 1
 
+    return node, prefix_reward
 
-    raise NotImplementedError("Implement selection.")
+    #raise NotImplementedError("Implement selection.")
 
 
 def exploration(node, game, horizon, rng):
@@ -81,7 +96,24 @@ def exploration(node, game, horizon, rng):
        Store that node as child in the parent's dictionary.
     4. Return the new child and the immediate reward.
     """
-    raise NotImplementedError("Implement exploration (expansion).")
+
+    if game.is_terminal() or node.depth == horizon:
+        return node, 0
+    else:
+
+        untried_actions = []
+        for action in range(4):
+            if action not in node.children:
+                untried_actions.append(action)
+                break
+
+    untried_action = rng.choice(untried_actions)
+    reward, done, apples = advance(game,untried_action)
+    child = Node(parent=node, depth=node.depth+1)
+    node.children[untried_action] = child
+
+    return  child, reward
+    #raise NotImplementedError("Implement exploration (expansion).")
 
 
 def simulation(game, remaining_horizon, rng):
@@ -98,7 +130,20 @@ def simulation(game, remaining_horizon, rng):
     4. Add its reward to the return and reduce remaining_horizon by 1. Go back to step 2.
     5. After the loop, return the sum.
     """
-    raise NotImplementedError("Implement simulation.")
+
+    new_rewards = 0
+    depth = 0
+
+    while not game.is_terminal() and depth < remaining_horizon:
+        moves = rollout_moves(game)
+        action = rng.choice(moves)
+        reward, done, apples = advance(game,action)
+
+        new_rewards += reward
+        depth += 1
+
+    return new_rewards
+    #raise NotImplementedError("Implement simulation.")
 
 
 def backpropagation(node, value):
@@ -110,7 +155,13 @@ def backpropagation(node, value):
 
     This function does not return anything.
     """
-    raise NotImplementedError("Implement backpropagation.")
+
+    while node is not None:
+        node.visits += 1
+        node.total += value
+
+        node = node.parent
+    #raise NotImplementedError("Implement backpropagation.")
 
 
 def search(game, iterations, rng, horizon=12):
