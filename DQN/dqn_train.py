@@ -117,7 +117,7 @@ def train(seed, steps, folder):
     # TODO 1.1: Replace None with an SB3 DQN. Give it "MlpPolicy", our env and seed,
     # TODO 2.1: Try to replace DQN with PPO and see if it does better after training
     # and unpack options as keyword arguments. Create it once so it retains experience.
-    model = None
+    model = DQN("MlpPolicy", env, seed=seed, **options)
 
     if model is None:
         raise NotImplementedError("Set the model two lines above.")
@@ -129,7 +129,8 @@ def train(seed, steps, folder):
             # TODO 1.2: Replace the exception with a call to the model's learn method.
             # Use block_steps for total_timesteps; the last block may be shorter. Set
             # reset_num_timesteps to False so progress continues across blocks.
-            raise NotImplementedError("Train your agent here.")
+            ##raise NotImplementedError("Train your agent here.")
+            model.learn(total_timesteps=block_steps, reset_num_timesteps=False)
             steps_left -= block_steps
 
             # Report on the average performance in the last 20 recently completed games

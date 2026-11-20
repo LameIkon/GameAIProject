@@ -7,3 +7,8 @@ To run rule based agent:
 py .\Rulebased.py
 
 .\battlesnake\battlesnake.exe play -W 11 -H 11 --name 'Python Starter Project' --url http://localhost:8000 -g solo --browser
+
+
+To run DQN agent:
+When in folder type the following
+python dqn_battlesnake.py --model results/dqn_seed0_steps20000/dqn.zip --port 8006
