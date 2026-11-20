@@ -3,6 +3,10 @@ Hello world
 To install requiremnets:
 pip install -r .\requirements.txt
 
+To display in browser:
+-g solo --browser
+use that at the end of a Play command
+
 To run rule based agent:
 py .\Rulebased.py
 
